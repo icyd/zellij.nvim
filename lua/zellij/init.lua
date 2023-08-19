@@ -9,6 +9,7 @@ local directionTranslation = {
     l = "right",
 }
 local ACTION = "action"
+local MOVE_FOCUS = "move-focus"
 local MOVE_FOCUS_OR_TAB = "move-focus-or-tab"
 local RENAME_PANE = "rename-pane"
 local RENAME_TAB = "rename-tab"
@@ -60,7 +61,11 @@ function zellij.zjNavigate(direction)
     local zellijDirection = directionTranslation[direction]
     zellij.log("Navigate " .. direction .. " aka " .. zellijDirection)
     if zellij.edgeDetect(direction) then
-        zellij.ZellijCommand(zellij.mergeArgs({ ACTION, MOVE_FOCUS_OR_TAB, zellijDirection }), false)
+        if zellij.opts.moveFocusOrTab then
+            zellij.ZellijCommand(zellij.mergeArgs({ ACTION, MOVE_FOCUS_OR_TAB, zellijDirection }), false)
+        else
+            zellij.ZellijCommand(zellij.mergeArgs({ ACTION, MOVE_FOCUS, zellijDirection }), false)
+        end
     end
 end
 
@@ -108,6 +113,9 @@ function zellij.setup(opts)
     end
     if opts.whichKeyEnabled == nil then
         opts.whichKeyEnabled = false
+    end
+    if opts.moveFocusOrTab == nil then
+        opts.moveFocusOrTab = true
     end
     if opts.debug == true then
         print("Zellij plugin debug mode")

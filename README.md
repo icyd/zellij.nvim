@@ -29,6 +29,7 @@ use {
     path = "zellij", -- Zellij binary path
     replaceVimWindowNavigationKeybinds = false, -- Will set keybinds like <C-w>h to left
     vimTmuxNavigatorKeybinds = false, -- Will set keybinds like <C-h> to left
+    moveFocusOrTab = true, -- Use `zellij action move-focus-or-tab` if set to `false` use `zellij action move-focus`
     debug = false, -- Will log things to /tmp/zellij.nvim
 }
 ```
